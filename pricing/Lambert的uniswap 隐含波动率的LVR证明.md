@@ -13,8 +13,8 @@
 $$
 \sigma_{panoptic} = 2* feeRate*\sqrt{\frac{Volume}{tickLiqudity}}
 $$
-### LVR
 
+### LVR
 
 原版的论文（a16z）：https://arxiv.org/pdf/2208.06046
 手续费速率（zelos）：https://medium.com/zelos-research/how-to-use-lvr-for-pool-selection-c442601c233f
@@ -23,29 +23,36 @@ $$
 绝大部分的难点在原版的论文给出的瞬时LVR。我们只需稍加加工：
 
 论文里给出了uniswapv3 的瞬时LVR 为，K为头寸的流动性。
+
 $$
 l(\sigma,P) = \frac{K\sigma^2}{4}\sqrt{P}
 $$
 
-我们对其做了归一化处理$L=\frac{𝑆_𝐿}{𝑆_0} 𝐻=\frac{𝑆_𝐻}{𝑆_0}$，以及让头寸的价值设定为$1.
+我们对其做了归一化处理 $L=\frac{𝑆_𝐿}{𝑆_0} 𝐻=\frac{𝑆_𝐻}{𝑆_0}$，以及让头寸的价值设定为 $1。
 
 瞬时LVR则变为
+
 $$
 l(\sigma) = \frac{\lambda \sigma^2}{4}
 $$
+
 $$
 \lambda = \frac{1}{2-\sqrt{L}-\frac{1}{H}}
 $$
+
 那么手续费获取速率部分也和$\lambda$ 相关。
+
 $$
 fee = C*\lambda
 $$
+
 其中C的意义是1单位 的流动性的手续费回报率。
 最后我们让两者手续费获取速度 和 LVR 损失速度相等，得到：
 
 $$
 \sigma_{LVR} = 2\sqrt{C}
 $$
+
 $$
 C = \frac {FeeRate \times 10 ^ {\frac{d0 + d1}{2}}}{\sqrt{P} \times Liq}
 $$
@@ -61,8 +68,7 @@ $$
 #### LVR
 目前我们有两个手续费的公式了。其实两者是一样的。
 我们先从LVR 的iv 进行代换
-$$
-$$
+
 $$
 \sigma_{LVR} = \frac{2 \times \sqrt{FeeRate} \times 10^\frac{d0+d1}{2}}{\sqrt{Liq} \times p^{\frac{1}{4}}}
 $$
@@ -73,6 +79,7 @@ panoptic 这样我们能从代码中整理其数据得到（假设：token1是qu
 $$
 tickLiq = \frac {Liq \times FeeRate \times \sqrt{1.0001^{tick}}}{10^{d1}}
 $$
+
 如果遵照我们之前的假设, 也就是总价值为1u, 而且token1是quote token. 所以
 
 $$
@@ -82,13 +89,15 @@ $$
 合并可知:
 
 $$
-
 \sigma_{panoptic} = 2 \times FeeRate \times \sqrt{\frac{\frac{1}{10^{d1}}}{\frac {Liq \times FeeRate \times \sqrt{1.0001^{tick}}}{10^{d1}}}} \\
-$$$$
-= 2 \times \sqrt{FeeRate} \times \frac{1}{\sqrt{Liq}} \times \frac{10^{\frac{d1}{2}}}{1.0001^\frac{tick}{4}}
+$$
 
 $$
+= 2 \times \sqrt{FeeRate} \times \frac{1}{\sqrt{Liq}} \times \frac{10^{\frac{d1}{2}}}{1.0001^\frac{tick}{4}}
+$$
+
 拼图的最后一块则是 $tick$ 和价格转换。
+
 $$
 P= 1.0001^{tick} \times 10^{d0-d1}
 $$
@@ -98,11 +107,15 @@ $$
 $$
 
 带入回去得到
+
 $$
 \sigma = 2 \times \sqrt{FeeRate} \times \frac{1}{\sqrt{Liq}} \times \frac{10^{\frac{d0+d1}{4}}} {P^\frac{1}{4}} 
-$$$$
+$$
+
+$$
 =\frac{2 \times \sqrt{FeeRate} \times 10^\frac{d0+d1}{2}}{\sqrt{Liq} \times p^{\frac{1}{4}}}
 $$
+
 所以，两者是完全一致的。
 
 
