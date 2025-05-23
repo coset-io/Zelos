@@ -108,7 +108,7 @@ LP部分:
 
 LP通过deposit向池内注入资金。原则上，注入的资金中，long和short的比例应该是1:1，也就是应该尽量维持long和short token平衡。如果比例不均衡甚至只抵押一个币种也可以。如果只存入long，会有一半被兑换为short，同时收取(或者发放)对应的swap price impact。
 
-除了用户的deposit，pool amount中另一个非常重要的部分是Realized PNL。前面说过trader互为对手方，如果trader盈利，就要从Pool amount中拿走一部分钱作为利润。如果trader亏损，就会把trader的一部分collateral扣掉，并充值到Pool amount中。不过，这个"转帐"并不是时时刻刻进行的。比如trader Alice以200u的本金投资了多头，当 index price上涨，Alice得到了100u的盈利，此时这100u仅仅属于账面上的盈利，还没有落到Alice的口袋中，因此它于Pending PNL。而且此时LP那边，Pool amount的数量也不会变化。只有在Alice关闭头寸的时候，这100u连同200u的本金一起转入Alice的钱包。而这100u对LP形成了-100u的亏损，pool amount会扣掉100u。此时pending PNL变成了realized PNL。
+除了用户的deposit，pool amount中另一个非常重要的部分是Realized PNL。前面说过trader互为对手方，如果trader盈利，就要从Pool amount中拿走一部分钱作为利润。如果trader亏损，就会把trader的一部分collateral扣掉，并充值到Pool amount中。不过，这个"转帐"并不是时时刻刻进行的。比如trader Alice以200u的本金投资了多头，当 index price上涨，Alice得到了100u的盈利，此时这100u仅仅属于账面上的盈利，还没有落到Alice的口袋中，因此它属于Pending PNL。而且此时LP那边，Pool amount的数量也不会变化。只有在Alice关闭头寸的时候，100u的盈利才会连同200u的本金一起转入Alice的钱包。而这100u对LP形成了-100u的亏损，pool amount会扣掉100u。此时pending PNL变成了realized PNL。
 
 需要注意，尽管pending pnl对Pool amount不会造成影响，但是对pool value还是有影响的。Pool value代表了LP的所有资产，Pending值也包括在内。
 
