@@ -33,7 +33,7 @@ GMX V2的一大改进是将各个代币的交易池独立，这隔绝了各个�
 
 比如对于ETH/USD[ETH-USDC]池，long和index token都是ETH，short token是USDC。随着ETH价格变动，trader会有不同的PNL。
 
-为了保持资金安全，对与波动比较大的代币，GMX允许抵押相对稳定的币种。如AAVE/USD[ETH-USDC]这个池，Long token是ETH，short token是USDC，index token是AAVE。无论trader和LP，都要抵押ETH或者USDC，但是收益计算依据AAVE的价格。
+还有一种池是合成资产池。对与波动比较大的代币，GMX允许抵押相对稳定的币种。如AAVE/USD[ETH-USDC]这个池，Long token是ETH，short token是USDC，index token是AAVE。这个池用ETH代替AAVE来支持多头交易，减少抵押品本身的波动，降低资金的风险。
 
 还有一种类型是单一币种池，long和short都是一个币种，如ETH/USD[WETH-WETH]，long和short token都是WETH。 使用单一资产可以让LP以币本位做市，减少价格波动带来的损失.
 
