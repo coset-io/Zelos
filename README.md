@@ -24,7 +24,7 @@
 
 ## 参与贡献
 
-如果你也想要加入 Zelos dex 小组，一起参与讨论/贡献，添加微信 antalphalabs 备注zelos/dex，快来一起build。
+如果你也想要加入 Zelos dex 小组，一起参与讨论/贡献，添加微信 coset2025 备注zelos/dex，快来一起build。
 
 
 
